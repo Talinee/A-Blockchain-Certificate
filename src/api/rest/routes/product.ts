@@ -7,7 +7,6 @@ const router: Router = Router()
 router.post('/product', async(request,response: Response, next: NextFunction) => {
     try {
         const input = request.body
-        console.log('ทำ');
         
         const product = await productService.add({
             name: input.name,
@@ -16,11 +15,31 @@ router.post('/product', async(request,response: Response, next: NextFunction) =>
             price: input.price
         })
 
-        response.json(product)
+        response.json(product);
     }
     catch(err) {
         next(err)
     }
+})
+
+router.put('/product/:id', async(request,response: Response, next: NextFunction) => {
+    try {    
+        const input = request.body
+        console.log(request.body);
+        
+        const params = request.params
+        const product = await productService.update({
+                name: input.name,
+                img: input.img,
+                code: input.code,
+                price: input.price,
+                id: params.id
+        })
+        response.json(product)
+    }
+        catch(err) {
+            next(err)
+        }
 })
 
 router.get('/product/:id', async(request,response:Response,next:NextFunction) => {
@@ -35,11 +54,20 @@ router.get('/product/:id', async(request,response:Response,next:NextFunction) =>
 
 router.get('/product', async(request,response: Response, next: NextFunction) => {
     try {
-        const product = await productService.view(response)
+        const product = await productService.find({})
         response.status(200).send(product);
         console.log(product);
     }
     catch(err){
+        next(err)
+    }
+})
+
+router.delete('/product/:id', async(request,response: Response, next: NextFunction) => {
+    try {
+        const product = await productService.delete(request.params)
+        response.status(204).end()
+    } catch (error) {
         next(err)
     }
 })

@@ -6,16 +6,16 @@ const environment = process.env.API_ENV || 'local'
 
 const config = {
     environment,
-    name: 'a-blockchain-cer',
+    name: 'a-blockchain',
     api: {
         port: 80,
     },
     database: {
         username: '',
         password: '',
-        host: 'mongodb.a-blockchain-cer',
+        host: 'mongodb.a-blockchain',
         port: 27017,
-        database: 'a-blockchain-cer',
+        database: 'a-blockchain',
         collectionPrefix: 'abc',
     },
 }
