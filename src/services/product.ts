@@ -16,20 +16,19 @@ const productService = {
         }
     },
 
-    async view(input): Promise<{ successful: boolean, data: productDoc[] }> { 
-        const product = await Product.find({_id:input.id}).exec()
+    async get(input): Promise<{ successful: boolean, data: productDoc[] }> { 
+        const product = await Product.findOne({_id:input.id}).exec()
         
         return { successful: true, data: product }
     },
 
-    async find(): Promise<{ successful: boolean, data: productDoc[] }> {        
-        const products = await Product.find({}).exec()
+    async getAll(): Promise<{ successful: boolean, data: productDoc[] }> {        
+        const products = await Product.find()
         
         return { successful: true, data: products }
     },
 
     async update(input): Promise<{ successful: boolean, data: productDoc[]}> {
-        try {
             const product = await Product.findByIdAndUpdate(
                 {_id:input.id},
                 {$set: {    name:input.name, 
@@ -39,9 +38,6 @@ const productService = {
                 }},
             )
             return { successful: true, data: product }
-        } catch (e) {
-            return {successful: false, message: e}
-        }
     },
 
     async delete(input):Promise<{ successful: boolean, message: String }> {

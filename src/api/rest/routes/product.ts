@@ -44,7 +44,7 @@ router.put('/product/:id', async(request,response: Response, next: NextFunction)
 
 router.get('/product/:id', async(request,response:Response,next:NextFunction) => {
     try {
-        const product = await productService.view(request.params)
+        const product = await productService.get(request.params)
         response.json(product)
     }
     catch(err) {
@@ -54,9 +54,8 @@ router.get('/product/:id', async(request,response:Response,next:NextFunction) =>
 
 router.get('/product', async(request,response: Response, next: NextFunction) => {
     try {
-        const product = await productService.find({})
-        response.status(200).send(product);
-        console.log(product);
+        const product = await productService.getAll()
+        response.json(product)
     }
     catch(err){
         next(err)
